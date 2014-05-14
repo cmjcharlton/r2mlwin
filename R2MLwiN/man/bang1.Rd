@@ -37,8 +37,11 @@ See \code{mlmRev} package for an alternative format of the same dataset, with fe
 
 \examples{
 \dontrun{
-# NB: change path as appropriate
-MLwiN <- "C:/Program Files (x86)/MLwiN v2.29/"
+#NOTE: Assumes MLwiN path is C:/Program Files (x86)/MLwiN v2.30/
+#...so please change relevant line if different
+#if using R2MLwiN via WINE, the path may look like 
+#options(MLwiN_path="/home/USERNAME/.wine/drive_c/Program Files (x86)/MLwiN v2.30/")
+
 data(bang1)
 bang1$use <- as.numeric(bang1$use) - 1
 bang1$urban <- as.numeric(bang1$urban) - 1
@@ -46,10 +49,9 @@ bang1$urban <- as.numeric(bang1$urban) - 1
 # Fit 2-level random coefficient logistic model, using MCMC
 # cons (constant of ones) as denominator specifies
 # Bernoulli distribution (0/1 response)
-F1 = "logit(use, cons) ~ (0|cons + age + lc[nokids] + urban) + (2|cons + urban)"
+F1 = logit(use, cons) ~ (0|cons + age + lc[nokids] + urban) + (2|cons + urban)
 ID = c("district", "woman")
-binomialMCMC <- runMLwiN(Formula = F1, levID = ID, D = "Binomial", 
-indata = bang1, estoptions = list(EstM = 1), MLwiNPath = MLwiN)
+binomialMCMC <- runMLwiN(Formula = F1, levID = ID, D = "Binomial", indata = bang1, estoptions = list(EstM = 1))
 }
 }
 \keyword{datasets}
