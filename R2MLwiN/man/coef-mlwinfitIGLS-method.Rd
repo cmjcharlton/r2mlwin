@@ -2,12 +2,9 @@
 % Please edit documentation in R/mlwinfitIGLS.R
 \name{coef,mlwinfitIGLS-method}
 \alias{coef,mlwinfitIGLS-method}
-\alias{coefficients,mlwinfitIGLS-method}
 \title{Extract the coefficient vector from "mlwinfitIGLS" objects}
 \usage{
 \S4method{coef}{mlwinfitIGLS}(object, ...)
-
-\S4method{coefficients}{mlwinfitIGLS}(object, ...)
 }
 \arguments{
 \item{object}{An \code{\link{mlwinfitIGLS-class}} object}
@@ -18,5 +15,5 @@
 Extract the coefficient vector from "mlwinfitIGLS" objects
 }
 \seealso{
-\code{\link[stats]{coef}}
+\code{\link[stats4]{coef-methods}}
 }
