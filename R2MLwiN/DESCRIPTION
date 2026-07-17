@@ -39,5 +39,5 @@ License: GPL (>= 2)
 URL: https://www.bristol.ac.uk/cmm/software/r2mlwin/, https://r-forge.r-project.org/projects/r2mlwin/, https://www.bristol.ac.uk/cmm/software/mlwin/
 SystemRequirements: MLwiN, (OpenBUGS, WinBUGS optional)
 Encoding: UTF-8
-RoxygenNote: 7.3.3
 LazyData: true
+Config/roxygen2/version: 8.0.0
