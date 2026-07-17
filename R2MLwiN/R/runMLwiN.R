@@ -1353,6 +1353,20 @@ version:date:md5:filename:x64:trial:platform
 3.17:Dec 2025:652d3bd0952d81f1f185cd593af40f74:mlnscript:TRUE:FALSE:bsd
 3.17:Dec 2025:1f8da1aae234554f2fea74244bcb2ba8:mlnscript:TRUE:FALSE:bsd
 3.17:Dec 2025:c6b546e3a956ef910c1761ae8c11e1cb:mlnscript:TRUE:FALSE:bsd
+3.18:Jul 2026:5ea453ca69b346ce858e5bca15b024ed:mlwin.exe:TRUE:FALSE:win
+3.18:Jul 2026:d43df2d7f425b8d5bcead5ee1b8fde3b:mlnscript.exe:TRUE:FALSE:win
+3.18:Jul 2026:e00c0173035b76a11633c673abda5e84:mlnscript:TRUE:FALSE:lin
+3.18:Jul 2026:cee0526e3b9ecf669e1d8e31a9ef11a1:mlnscript:TRUE:FALSE:lin
+3.18:Jul 2026:b8bebc62da1f48153904ee438e28c294:mlnscript:TRUE:FALSE:lin
+3.18:Jul 2026:792160e8c87bd585cc9b4363cc71c2a7:mlnscript:TRUE:FALSE:lin
+3.18:Jul 2026:6965fed6146a5621cc1c43809680cb4f:mlnscript:TRUE:FALSE:lin
+3.18:Jul 2026:e50005b8cf682474c6ce27849ea82a89:mlnscript:TRUE:FALSE:lin
+3.18:Jul 2026:6ef7560b81b1d8d31d51e398ed460555:mlnscript:TRUE:FALSE:lin
+3.18:Jul 2026:6af19f4caffa433182f788ad16841d8b:mlnscript:TRUE:FALSE:lin
+3.18:Jul 2026:a239f8331700810947353766804ced19:mlnscript:TRUE:FALSE:mac
+3.18:Jul 2026:6524ba97c6c4462048ac7937a380ffb1:mlnscript:TRUE:FALSE:bsd
+3.18:Jul 2026:adf9943bca0bd0e9ec8ad1e4ba937810:mlnscript:TRUE:FALSE:bsd
+3.18:Jul 2026:a314d00497592017044e2c833d313450:mlnscript:TRUE:FALSE:bsd
 '
   versioninfo <- utils::read.delim(textConnection(versioninfostr), header = TRUE, sep = ":", strip.white = TRUE)
   if (isTRUE(checkversion)) {
