@@ -299,7 +299,7 @@
 #' it estimates distinct variances for each residual error and distinct covariances
 #' for each residual error pair. Four other
 #' settings are currently available:\cr
-#' \tabular{ll}{\code{1} \tab fits stuctured errors with a common correlation paramater and a common variance parameter;\cr
+#' \tabular{ll}{\code{1} \tab fits structured errors with a common correlation parameter and a common variance parameter;\cr
 #' \code{2} \tab fits AR1 errors with a common variance parameter;\cr \code{3} \tab fits structured errors with a common
 #' correlation parameter and independent variance parameters;\cr \code{4} \tab fits AR1 errors with independent variance
 #' parameters.\cr }
