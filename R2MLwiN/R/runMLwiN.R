@@ -604,18 +604,24 @@ runMLwiN <- function(Formula, levID = NULL, D = "Normal", data = NULL, estoption
     warning("This syntax has been superseded, see help for guidance on converting it.")
   }
 
-  drop.data <- estoptions$drop.data
-  if (is.null(drop.data)) {
+  drop.data <- as.logical(estoptions$drop.data)
+  if (length(drop.data) != 1) {
     if (oldsyntax) {
       drop.data <- FALSE
     } else {
       drop.data <- TRUE
     }
   }
+  if (is.na(drop.data)) {
+    stop("Invalid boolean value for option drop.data")
+  }
 
-  drop.levels <- estoptions$drop.levels
-  if (is.null(drop.levels)) {
+  drop.levels <- as.logical(estoptions$drop.levels)
+  if (length(drop.levels) != 1) {
     drop.levels <- TRUE
+  }
+  if (is.na(drop.levels)) {
+    stop("Invalid boolean value for option drop.levels")
   }
 
   if (oldsyntax) {
@@ -741,17 +747,24 @@ runMLwiN <- function(Formula, levID = NULL, D = "Normal", data = NULL, estoption
   }
 
   # Check MLwiNPath is usable and set command/args
-  debugmode <- estoptions$debugmode
-  if (is.null(debugmode))
+  debugmode <- as.logical(estoptions$debugmode)
+  if (length(debugmode) != 1) {
     debugmode <- FALSE
+  }
+  if (is.na(debugmode)) {
+    stop("Invalid boolean value for option debugmode")
+  }
 
-  x64 <- estoptions$x64
-  if (is.null(x64)) {
+  x64 <- as.logical(estoptions$x64)
+  if (length(x64) != 1) {
     if (.Machine$sizeof.pointer == 8) {
       x64 <- TRUE
     } else {
       x64 <- FALSE
     }
+  }
+  if (is.na(x64)) {
+    stop("Invalid boolean value for option x64")
   }
 
   if (is.null(MLwiNPath)) {
@@ -1730,13 +1743,21 @@ version:date:md5:filename:x64:trial:platform:architecture
     indata[["Intercept"]] <- rep(1, nrow(indata))
   }
 
-  show.file <- estoptions$show.file
-  if (is.null(show.file))
+  show.file <- as.logical(estoptions$show.file)
+  if (length(show.file) != 1) {
     show.file <- FALSE
+  }
+  if (is.na(show.file)) {
+    stop("Invalid boolean value for option show.file")
+  }
 
-  resi.store <- estoptions$resi.store
-  if (is.null(resi.store))
+  resi.store <- as.logical(estoptions$resi.store)
+  if (length(resi.store) != 1) {
     resi.store <- FALSE
+  }
+  if (is.na(resi.store)) {
+    stop("Invalid boolean value for option resi.store")
+  }
 
   resioptions <- estoptions$resioptions
   if (is.null(resioptions)) {
@@ -1757,8 +1778,8 @@ version:date:md5:filename:x64:trial:platform:architecture
     stop("resi.store.levs option is not valid for (R)IGLS estimation")
   }
 
-  fpsandwich <- estoptions$fpsandwich
-  rpsandwich <- estoptions$rpsandwich
+  fpsandwich <- as.logical(estoptions$fpsandwich)
+  rpsandwich <- as.logical(estoptions$rpsandwich)
 
   weighting <- estoptions$weighting
   if (EstM == 1 && !is.null(weighting)) {
@@ -1809,22 +1830,37 @@ version:date:md5:filename:x64:trial:platform:architecture
         }
       }
     }
-    if (is.null(fpsandwich))
+    if (length(fpsandwich) != 1) {
       fpsandwich <- TRUE
-    if (is.null(rpsandwich))
+    }
+    if (length(rpsandwich) != 1) {
       rpsandwich <- TRUE
-    if (is.null(weighting$standardised))
+    }
+    if (is.null(weighting$standardised)) {
       weighting$standardised <- TRUE
+    }
   }
 
-  if (is.null(fpsandwich))
+  if (length(fpsandwich) != 1) {
     fpsandwich <- FALSE
-  if (is.null(rpsandwich))
+  }
+  if (is.na(fpsandwich)) {
+    stop("Invalid boolean value for option fpsandwich")
+  }
+  if (length(rpsandwich) != 1) {
     rpsandwich <- FALSE
+  }
+  if (is.na(rpsandwich)) {
+    stop("Invalid boolean value for option rpsandwich")
+  }
 
-  clean.files <- estoptions$clean.files
-  if (is.null(clean.files))
+  clean.files <- as.logical(estoptions$clean.files)
+  if (length(clean.files) != 1) {
     clean.files <- TRUE
+  }
+  if (is.na(clean.files)) {
+    stop("Invalid boolean value for option clean.files")
+  }
 
   clre <- estoptions$clre
   clre[2, ] <- gsub("^1$", "Intercept", clre[2, ])
@@ -1856,25 +1892,36 @@ version:date:md5:filename:x64:trial:platform:architecture
   }
 
 
-  mem.init <- estoptions$mem.init
-  if (is.null(mem.init))
+  mem.init <- as.logical(estoptions$mem.init)
+  if (length(mem.init) != 1) {
     mem.init <- "default"
+  }
 
-  optimat <- estoptions$optimat
-  if (is.null(optimat))
+  optimat <- as.logical(estoptions$optimat)
+  if (length(optimat) != 1) {
     optimat <- FALSE
+  }
+  if (is.na(optimat)) {
+    stop("Invalid boolean value for option optimat")
+  }
 
-  maxiter <- estoptions$maxiter
-  if (is.null(maxiter))
+  maxiter <- as.integer(estoptions$maxiter)
+  if (length(maxiter) != 1) {
     maxiter <- 20
+  }
 
-  convtol <- estoptions$tol
-  if (is.null(convtol))
+  convtol <- as.integer(estoptions$tol)
+  if (length(convtol) != 1) {
     convtol <- 2
+  }
 
-  extra <- estoptions$extra
-  if (is.null(extra))
+  extra <- as.logical(estoptions$extra)
+  if (length(extra) != 1) {
     extra <- FALSE
+  }
+  if (is.na(extra)) {
+    stop("Invalid boolean value for option extra")
+  }
   if (extra == TRUE) {
     if (EstM != 0) {
       stop("extra can only be specified for (R)IGLS models")
@@ -1884,14 +1931,15 @@ version:date:md5:filename:x64:trial:platform:architecture
     }
   }
 
-  nonlinear <- estoptions$nonlinear
-  if (!is.null(nonlinear)) {
+  nonlinear <- as.integer(estoptions$nonlinear)
+  if (length(nonlinear) != 0) {
     if (D[1] == "Normal" || D[1] == "Multivariate Normal") {
       stop("Nonlinear options are not valid for normal models")
     }
   }
-  if (is.null(nonlinear))
+  if (length(nonlinear) != 2) {
     nonlinear <- c(0, 1)
+  }
   if (length(stats::na.omit(levID)) == 1 && any(nonlinear != c(0, 1))) {
     stop("Only MQL1 is valid for one-level discrete models")
   }
@@ -1904,9 +1952,10 @@ version:date:md5:filename:x64:trial:platform:architecture
     stop("Invalid nonlinear option")
   }
 
-  Meth <- estoptions$Meth
-  if (is.null(Meth))
+  Meth <- as.integer(estoptions$Meth)
+  if (length(Meth) != 1) {
     Meth <- 1
+  }
 
   reset <- estoptions$reset
   if (is.null(reset)) {
@@ -2022,9 +2071,12 @@ version:date:md5:filename:x64:trial:platform:architecture
     stop("Cross-classification is not available with (R)IGLS estimation")
   }
 
-  xc <- estoptions$xc
-  if (is.null(xc)) {
+  xc <- as.logical(estoptions$xc)
+  if (length(xc) != 1) {
     xc <- FALSE
+  }
+  if (is.na(xc)) {
+    stop("Invalid boolean value for option xc")
   }
 
   mm <- estoptions$mm
@@ -2154,9 +2206,12 @@ version:date:md5:filename:x64:trial:platform:architecture
     }
   }
 
-  carcentre <- estoptions$carcentre
-  if (is.null(carcentre)) {
+  carcentre <- as.logical(estoptions$carcentre)
+  if (length(carcentre) != 1) {
     carcentre <- FALSE
+  }
+  if (is.na(carcentre)) {
+    stop("Invalid boolean value for option carcentre")
   }
 
   # Convert old version of syntax
@@ -2702,23 +2757,29 @@ version:date:md5:filename:x64:trial:platform:architecture
   rownames(RP.cov) <- RP.names
 
   if (EstM == 1) {
-    iterations <- mcmcMeth$iterations
-    if (is.null(iterations))
+    iterations <- as.integer(mcmcMeth$iterations)
+    if (length(iterations) != 1) {
       iterations <- 5000
-    burnin <- mcmcMeth$burnin
-    if (is.null(burnin))
+    }
+    burnin <- as.integer(mcmcMeth$burnin)
+    if (length(burnin) != 1) {
       burnin <- 500
-    thinning <- mcmcMeth$thinning
-    if (is.null(thinning))
+    }
+    thinning <- as.integer(mcmcMeth$thinning)
+    if (length(thinning) != 1) {
       thinning <- 1
-    nchains <- mcmcMeth$nchains
-    if (is.null(nchains))
+    }
+    nchains <- as.integer(mcmcMeth$nchains)
+    if (length(nchains) != 1) {
       nchains <- 1
-    seed <- mcmcMeth$seed
-    if (is.null(seed))
+    }
+    seed <- as.integer(mcmcMeth$seed)
+    if (length(seed) == 0) {
       seed <- 1:nchains
-    if (length(seed) != nchains)
+    }
+    if (length(seed) != nchains) {
       seed <- rep(seed, nchains)
+    }
     priorParam <- mcmcMeth$priorParam
     if (is.list(priorParam)) {
       nrand <- list()
@@ -2727,14 +2788,17 @@ version:date:md5:filename:x64:trial:platform:architecture
       }
       priorParam <- prior2macro(priorParam, D, gsub("FP_", "", FP.names), nrand)
     }
-    if (is.null(priorParam))
+    if (is.null(priorParam)) {
       priorParam <- "default"
-    scale <- mcmcMeth$scale
-    if (is.null(scale))
+    }
+    scale <- as.numeric(mcmcMeth$scale)
+    if (length(scale) != 1) {
       scale <- 5.8
-    refresh <- mcmcMeth$refresh
-    if (is.null(refresh))
+    }
+    refresh <- as.integer(mcmcMeth$refresh)
+    if (length(refresh) != 1) {
       refresh <- 50
+    }
     # Ensure that refresh is not greater than total iterations
     refresh <- min(refresh, iterations)
     fixM <- mcmcMeth$fixM
@@ -2761,15 +2825,18 @@ version:date:md5:filename:x64:trial:platform:architecture
         Lev1VarM <- 1
       }
     }
-    OtherVarM <- mcmcMeth$OtherVarM
-    if (is.null(OtherVarM))
+    OtherVarM <- as.integer(mcmcMeth$OtherVarM)
+    if (length(OtherVarM) != 1) {
       OtherVarM <- 1
-    adaption <- mcmcMeth$adaption
-    if (is.null(adaption))
+    }
+    adaption <- as.integer(mcmcMeth$adaption)
+    if (length(adaption) != 1) {
       adaption <- 1
+    }
     priorcode <- mcmcMeth$priorcode
-    if (is.null(priorcode))
+    if (is.null(priorcode)) {
       priorcode <- c(gamma=1)
+    }
     if (is.null(names(priorcode))) {
       if (length(priorcode) == 1) {
         names(priorcode) <- "gamma"
@@ -2790,15 +2857,18 @@ version:date:md5:filename:x64:trial:platform:architecture
       }
     }
     priorcode[1] <- as.integer(priorcode[1])
-    rate <- mcmcMeth$rate
-    if (is.null(rate))
+    rate <- as.integer(mcmcMeth$rate)
+    if (length(rate) != 1) {
       rate <- 50
-    tol <- mcmcMeth$tol
-    if (is.null(tol))
+    }
+    tol <- as.numeric(mcmcMeth$tol)
+    if (length(tol) != 1) {
       tol <- 10
-    lclo <- mcmcMeth$lclo
-    if (is.null(lclo))
+    }
+    lclo <- as.integer(mcmcMeth$lclo)
+    if (length(lclo) != 1) {
       lclo <- 0
+    }
     dami <- mcmcMeth$dami
     if (!is.null(dami)) {
       if (dami[1] %in% c(0, 1, 2)) {
@@ -2973,13 +3043,21 @@ version:date:md5:filename:x64:trial:platform:architecture
     stop("BUGO requires MCMC estimation to be selected")
   }
 
-  sort.force <- estoptions$sort.force
-  if (is.null(sort.force))
+  sort.force <- as.logical(estoptions$sort.force)
+  if (length(sort.force) != 1) {
     sort.force <- FALSE
+  }
+  if (is.na(sort.force)) {
+    stop("Invalid boolean value for option sort.force")
+  }
 
-  sort.ignore <- estoptions$sort.ignore
-  if (is.null(sort.ignore))
+  sort.ignore <- as.logical(estoptions$sort.ignore)
+  if (length(sort.ignore) != 1) {
     sort.ignore <- FALSE
+  }
+  if (is.na(sort.ignore)) {
+    stop("Invalid boolean value for option sort.ignore")
+  }
 
   rng.version <- estoptions$rng.version
   if (is.null(rng.version))
@@ -3207,8 +3285,9 @@ version:date:md5:filename:x64:trial:platform:architecture
     }
   }
 
-  if (!file.access(workdir) == 0)
+  if (!file.access(workdir) == 0) {
     dir.create(workdir)
+  }
 
   dtafile <- normalizePath(tempfile("dtafile_", tmpdir = workdir, fileext = ".dta"), winslash = "/", mustWork = FALSE)
 
@@ -3302,11 +3381,11 @@ version:date:md5:filename:x64:trial:platform:architecture
     }
   }
   if (EstM == 0) {
-      if (length(startval[[1]]) == 0) {
-        svals <- NULL
-      } else {
-        svals <- startval[[1]]
-      }
+    if (length(startval[[1]]) == 0) {
+      svals <- NULL
+    } else {
+      svals <- startval[[1]]
+    }
     long2shortnamemap <- write.IGLS(outdata, dtafile, oldsyntax, resp, levID, expl, rp, D, nonlinear, categ, notation, nonfp, clre,
                  Meth, extra, reset, rcon, fcon, maxiter, convtol, mem.init, optimat, weighting, fpsandwich, rpsandwich,
                  macrofile = macrofile, IGLSfile = IGLSfile, resifile = resifile, resi.store = resi.store, resioptions = resioptions,
