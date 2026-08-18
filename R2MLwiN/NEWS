@@ -1,3 +1,7 @@
+Tue Aug 18 2026
+1. Changes
+    * Add checks for invalid sub-options within estoptions, resioptions and mcmcOptions
+
 Wed Jul 30 2025
 1. Bug fixing
     * R will remove duplicate terms in the model formula, so give an error message if this would occur

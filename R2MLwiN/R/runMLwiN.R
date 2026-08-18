@@ -587,6 +587,51 @@
 #' @export
 runMLwiN <- function(Formula, levID = NULL, D = "Normal", data = NULL, estoptions = list(EstM = 0), BUGO = NULL, MLwiNPath = NULL,
                      stdout = "", stderr = "", workdir = tempdir(), checkversion = TRUE, allowcontrast = FALSE, indata = NULL, saveworksheet = NULL) {
+  
+  validestoptions <- c("drop.data", 
+                       "drop.levels", 
+                       "EstM", 
+                       "debugmode", 
+                       "x64", 
+                       "centring", 
+                       "show.file", 
+                       "resi.store", 
+                       "resioptions", 
+                       "resi.store.levs", 
+                       "fpsandwich", 
+                       "rpsandwich",
+                       "weighting",
+                       "clean.files",
+                       "clre",
+                       "smat",
+                       "mem.init",
+                       "optimat",
+                       "maxiter",
+                       "tol",
+                       "extra",
+                       "nonlinear",
+                       "Meth",
+                       "reset",
+                       "constraints",
+                       "fact",
+                       "xclass",
+                       "xc",
+                       "mm",
+                       "car",
+                       "carcentre",
+                       "notation",
+                       "merr",
+                       "mcmcMeth",
+                       "mcmcOptions",
+                       "startval",
+                       "sort.force",
+                       "sort.ignore",
+                       "rng.version")
+  
+  if (all(names(estoptions) %in% validestoptions) == FALSE) {
+    stop(paste0("Unrecognised estimation options:", setdiff(names(estoptions), validestoptions)))
+  }
+  
   if (!is.null(indata) && !is.null(data)) {
     stop("Only one of data and indata can be specified")
   }
@@ -1763,6 +1808,12 @@ version:date:md5:filename:x64:trial:platform:architecture
   if (is.null(resioptions)) {
     resioptions <- c("variance")
   }
+  
+  validresioptions <- c("variance", "standardised", "deletion", "leverage", "sampling", "influence", "norecode")
+  if (all(names(resioptions) %in% validresioptions) == FALSE) {
+    stop(paste0("Unrecognised residual options:", setdiff(names(resioptions), validresioptions)))
+  }
+  
   if ("variance" %in% resioptions && ("standardised" %in% resioptions || "deletion" %in% resioptions || "leverage" %in%
                                         resioptions)) {
     stop("variance will not be calculated together with standardised or deletion or leverage. Please remove variance in resioptions, and then standard error will be calculated instead.")
@@ -2890,6 +2941,11 @@ version:date:md5:filename:x64:trial:platform:architecture
   mcmcOptions <- estoptions$mcmcOptions
   if (EstM == 0 && !is.null(merr)) {
     stop("MCMC options cannot be specified with (R)IGLS estimation")
+  }
+  validmcmcoptions = c("orth", "hcen", "smcm", "smvn", "paex", "mcco")
+  
+  if (all(names(mcmcOptions) %in% validmcmcoptions) == FALSE) {
+    stop(paste0("Unrecognised MCMC options:", setdiff(names(mcmcOptions), validmcmcoptions)))
   }
 
   if (EstM == 1) {
