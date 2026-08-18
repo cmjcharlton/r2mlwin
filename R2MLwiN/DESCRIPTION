@@ -40,4 +40,4 @@ URL: https://www.bristol.ac.uk/cmm/software/r2mlwin/, https://r-forge.r-project.
 SystemRequirements: MLwiN, (OpenBUGS, WinBUGS optional)
 Encoding: UTF-8
 LazyData: true
-Config/roxygen2/version: 8.0.0
+Config/roxygen2/version: 8.1.0

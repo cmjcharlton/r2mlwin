@@ -59,83 +59,99 @@ import(doParallel)
 import(foreach)
 import(methods)
 import(parallel)
-importFrom(Matrix,nnzero)
-importFrom(Matrix,sparseMatrix)
-importFrom(broom,augment)
-importFrom(broom,glance)
-importFrom(broom,tidy)
-importFrom(coda,as.mcmc.list)
-importFrom(coda,effectiveSize)
-importFrom(coda,is.mcmc)
-importFrom(coda,mcmc)
-importFrom(coda,mcmc.list)
-importFrom(coda,raftery.diag)
-importFrom(coda,thin)
+importFrom(Matrix,
+  nnzero,
+  sparseMatrix
+)
+importFrom(broom,
+  augment,
+  glance,
+  tidy
+)
+importFrom(coda,
+  as.mcmc.list,
+  effectiveSize,
+  is.mcmc,
+  mcmc,
+  mcmc.list,
+  raftery.diag,
+  thin
+)
 importFrom(digest,digest)
-importFrom(foreign,read.dta)
-importFrom(foreign,write.dta)
+importFrom(foreign,
+  read.dta,
+  write.dta
+)
 importFrom(grDevices,dev.new)
-importFrom(graphics,close.screen)
-importFrom(graphics,lines)
-importFrom(graphics,par)
-importFrom(graphics,plot)
-importFrom(graphics,points)
-importFrom(graphics,screen)
-importFrom(graphics,split.screen)
-importFrom(graphics,text)
-importFrom(lattice,Rows)
-importFrom(lattice,panel.abline)
-importFrom(lattice,panel.grid)
-importFrom(lattice,panel.segments)
-importFrom(lattice,panel.xyplot)
-importFrom(lattice,qqmath)
-importFrom(lattice,trellis.par.get)
-importFrom(lattice,xyplot)
+importFrom(graphics,
+  close.screen,
+  lines,
+  par,
+  plot,
+  points,
+  screen,
+  split.screen,
+  text
+)
+importFrom(lattice,
+  Rows,
+  panel.abline,
+  panel.grid,
+  panel.segments,
+  panel.xyplot,
+  qqmath,
+  trellis.par.get,
+  xyplot
+)
 importFrom(memisc,getSummary)
-importFrom(stats,acf)
-importFrom(stats,as.formula)
-importFrom(stats,coef)
-importFrom(stats,coefficients)
-importFrom(stats,complete.cases)
-importFrom(stats,confint)
-importFrom(stats,cov)
-importFrom(stats,density)
-importFrom(stats,deviance)
-importFrom(stats,df.residual)
-importFrom(stats,end)
-importFrom(stats,fitted)
-importFrom(stats,fitted.values)
-importFrom(stats,formula)
-importFrom(stats,getCall)
-importFrom(stats,get_all_vars)
-importFrom(stats,logLik)
-importFrom(stats,model.frame)
-importFrom(stats,model.matrix)
-importFrom(stats,model.offset)
-importFrom(stats,na.omit)
-importFrom(stats,nobs)
-importFrom(stats,pacf)
-importFrom(stats,pnorm)
-importFrom(stats,predict)
-importFrom(stats,qnorm)
-importFrom(stats,quantile)
-importFrom(stats,reshape)
-importFrom(stats,resid)
-importFrom(stats,residuals)
-importFrom(stats,sd)
-importFrom(stats,start)
-importFrom(stats,symnum)
-importFrom(stats,terms)
-importFrom(stats,terms.formula)
-importFrom(stats,update)
-importFrom(stats,update.formula)
-importFrom(stats,var)
-importFrom(stats,vcov)
-importFrom(stats,window)
+importFrom(stats,
+  acf,
+  as.formula,
+  coef,
+  coefficients,
+  complete.cases,
+  confint,
+  cov,
+  density,
+  deviance,
+  df.residual,
+  end,
+  fitted,
+  fitted.values,
+  formula,
+  getCall,
+  get_all_vars,
+  logLik,
+  model.frame,
+  model.matrix,
+  model.offset,
+  na.omit,
+  nobs,
+  pacf,
+  pnorm,
+  predict,
+  qnorm,
+  quantile,
+  reshape,
+  resid,
+  residuals,
+  sd,
+  start,
+  symnum,
+  terms,
+  terms.formula,
+  update,
+  update.formula,
+  var,
+  vcov,
+  window
+)
 importFrom(tibble,tibble)
-importFrom(utils,citation)
-importFrom(utils,read.delim)
-importFrom(utils,stack)
+importFrom(utils,
+  citation,
+  read.delim,
+  stack
+)
 importMethodsFrom(stats4,coef)
 importMethodsFrom(stats4,logLik)
 importMethodsFrom(stats4,show)
