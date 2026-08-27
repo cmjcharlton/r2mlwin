@@ -586,6 +586,143 @@ setMethod("vcov", signature(object = "mlwinfitIGLS"), function(object, ...) {
   m
 })
 
+#' Extract the fixed-effects estimates from "mlwinfitIGLS" objects
+#' @param object An \code{\link{mlwinfitIGLS-class}} object
+#' @param ... Other arguments
+#' @seealso \code{\link[nlme]{fixed.effects}}
+#' @method fixef mlwinfitIGLS
+#' @export
+fixef.mlwinfitIGLS <- function(object, ...) {
+  result <- object@FP
+  names(result) <- gsub("^FP_", "", names(result))
+  return(result)
+}
+
+#' Extract the conditional means of the random effects from "mlwinfitIGLS" objects
+#' @param object An \code{\link{mlwinfitIGLS-class}} object
+#' @param condVar a logical argument indicating if the conditional variance-covariance matrices of the random effects should be added as an attribute.
+#' @param ... Other arguments
+#' @seealso \code{\link[nlme]{random.effects}}
+#' @method ranef mlwinfitIGLS
+#' @export
+ranef.mlwinfitIGLS <- function(object, condVar = TRUE, ...) {
+  if (length(object@residual) == 0) {
+    stop("Residuals not stored")
+  }
+  rpnames <- names(object@RP)
+  result <- list()
+  for (lev in seq_along(object@levID)) {
+    levnum <- (length(object@levID) - lev) + 1
+    if (levnum != 1) {
+      resi <- list()
+      expr <- paste0("^RP", levnum, "_var_")
+      varnames <- gsub(expr, "", rpnames)[grep(expr, rpnames)]
+      for (var in varnames) {
+        resi[[var]] <- object@residual[[paste0("lev_", levnum, "_resi_est_", var)]]
+      }
+      result[[object@levID[lev]]] <- data.frame(resi)
+      postVar <- NULL
+      if (condVar == TRUE) {
+        postVar <- array(dim = c(length(varnames), length(varnames), nrow(result[[object@levID[lev]]])))
+      }
+      if (condVar == TRUE) {
+        for (row in seq_along(varnames)) {
+          for (col in seq_len(row-1)) {
+            covarname <- paste0("lev_", levnum, "_resi_cov_", varnames[row], "_", varnames[col])
+            if (covarname %in% names(object@residual)) {
+              postVar[row, col, ] <- object@residual[[covarname]]
+              postVar[col, row, ] <- postVar[row, col, ]
+            } else {
+              warning("Residual sampling covariances not stored")
+            }
+          }
+          varname <- paste0("lev_", levnum, "_resi_var_", varnames[row])
+          if (varname %in% names(object@residual)) {
+            postVar[row, row, ] <- object@residual[[varname]]
+          } else {
+            warning("Residual variances not stored")
+          }
+        }
+      }
+      attr(result[[object@levID[lev]]], "postVar") <- postVar
+    }
+  }
+  class(result) <- "ranef.mer"
+  return(result)
+}
+
+#' Calculates the estimated variances, standard deviations, and correlations between the random-effects term from "mlwinfitIGLS" objects
+#' @param object An \code{\link{mlwinfitIGLS-class}} object
+#' @param sigma an optional numeric value used as a multiplier for the standard deviations.
+#' @param ... Other arguments
+#' @method VarCorr mlwinfitIGLS
+#' @export
+VarCorr.mlwinfitIGLS <- function(object, sigma = 1, ...) {
+  vc <- list()
+  rpnames <- names(object@RP)
+  sds <- NULL
+  corrs <- matrix(0, 0, 0)
+  simplelev1 <- FALSE
+
+  if (object@D == "Normal") {
+    simplelev1 <- ((length(grep("RP1", rpnames)) == 1) && ("RP1_var_Intercept" %in% rpnames)) # No complex level-1
+  }
+
+  # Note: This will not pick up parameters where there is a covariance with no
+  # corresponding variances, but these would have a correlation of zero in any case
+  sigmaest <- 1
+  for (lev in seq_along(object@levID)) {
+    levnum = (length(object@levID) - lev) + 1
+    if (levnum == 1 && simplelev1 == TRUE) {
+      sigmaest <- sqrt(object@RP["RP1_var_Intercept"])
+    } else {
+      expr <- paste0("^RP", levnum, "_var_")
+      varnames <- gsub(expr, "", rpnames)[grep(expr, rpnames)]
+      omega_u <- matrix(0, length(varnames), length(varnames))
+      rownames(omega_u) <- varnames
+      colnames(omega_u) <- varnames
+      for (row in seq_along(varnames)) {
+        for (col in seq_len(row-1)) {
+          covparamname <- paste0("RP", levnum, "_cov_", varnames[col], "_", varnames[row])
+          if (covparamname %in% names(object@RP)) {
+            omega_u[row, col] = object@RP[covparamname]
+            omega_u[col, row] = omega_u[row, col] 
+          }
+        }
+        varparamname <- paste0("RP", levnum, "_var_", varnames[row])
+        if (varparamname %in% names(object@RP)) {
+          omega_u[row, row] = object@RP[varparamname]
+        }
+      }
+      stddev <- sqrt(diag(omega_u))
+      attr(omega_u, "stddev") <- stddev
+
+      cor <- stats::cov2cor(omega_u)
+      attr(omega_u, "correlation") <- cor
+
+      class(omega_u) <- c("vcmat_us", "matrix", "array")
+      vc[[object@levID[lev]]] <- omega_u
+    }
+  }
+
+  if (!missing(sigma)) {
+    sds <- (sds / sigmaest) * sigma
+    sigmaest <- sigma
+  }
+
+  if (object@D == "Normal" && simplelev1 == TRUE) {
+    #vc <- rbind(vc, rep("", ncol(vc)))
+    #rownames(vc)[[nrow(vc)]] <- "Residual"
+    #vc[nrow(vc), 1] <- sigmaest^2
+    #vc[nrow(vc), 2] <- sigmaest
+    attr(vc, "sc") <- sigmaest^2
+    attr(vc, "useSc") <- TRUE
+  }
+
+  class(vc) <- "VarCorr.merMod"
+  return(vc)
+}
+
 #' Returns the residual degrees-of-freedom extracted from "mlwinfitIGLS" objects.
 #' @param object An \code{\link{mlwinfitIGLS-class}} object.
 #' @param ... Other arguments

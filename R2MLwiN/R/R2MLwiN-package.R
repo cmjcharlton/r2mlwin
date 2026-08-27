@@ -157,5 +157,6 @@
 #' @importFrom memisc getSummary
 #' @importFrom tibble tibble
 #' @importFrom broom tidy augment glance
+#' @importFrom nlme fixef ranef VarCorr
 ## usethis namespace: end
 NULL

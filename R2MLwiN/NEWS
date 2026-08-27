@@ -1,3 +1,7 @@
+Thu Aug 27 2026
+1. Changes
+    * Add support for the fixef() ranef() and VarCorr() functions
+
 Tue Aug 18 2026
 1. Changes
     * Add checks for invalid sub-options within estoptions, resioptions and mcmcOptions
