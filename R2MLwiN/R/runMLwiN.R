@@ -1824,6 +1824,10 @@ version:date:md5:filename:x64:trial:platform:architecture
     stop("Invalid residual option specified for MCMC estimation")
   }
 
+  if (EstM == 1 && isTRUE(resi.store) && "variance" %in% resioptions) {
+      warning("The residual variance name has been changed to lev_<level number>_resi_var_<random variable>, you may need to adjust existing scripts")
+  }
+
   resi.store.levs <- estoptions$resi.store.levs
   if (EstM == 0 && !is.null(resi.store.levs)) {
     stop("resi.store.levs option is not valid for (R)IGLS estimation")
@@ -3775,7 +3779,7 @@ version:date:md5:filename:x64:trial:platform:architecture
       resiraw <- list()
       resi.means <- resinames[grep("_resi_est", resinames)]
       resi.std <- resinames[grep("_std_resi_est", resinames)]
-      resi.var <- resinames[grep("_resi_variance", resinames)]
+      resi.var <- resinames[grep("_resi_var", resinames)]
       resi.se <- resinames[grep("_resi_se", resinames)]
       for (name in resi.means) {
         for (i in 1:nchains) {
@@ -3798,7 +3802,7 @@ version:date:md5:filename:x64:trial:platform:architecture
         resiraw[[name]] <- resiraw[[name]] / nchains
       }
       for (name in resi.var) {
-        meanname <- sub("_resi_variance_", "_resi_est_", name)
+        meanname <- sub("_resi_var_", "_resi_est_", name)
         for (i in 1:nchains) {
           if (is.null(resiraw[[name]])) {
             resiraw[[name]] <- resilist[[i]][[name]]

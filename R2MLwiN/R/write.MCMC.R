@@ -2379,14 +2379,14 @@ write.MCMC <- function(indata, dtafile, oldsyntax = FALSE, resp, levID, expl, rp
         for (k in 1:len.rpx) {
           if (!is.null(clre)) {
             if (!(level == as.numeric(clre[1, ii]) && rpx[k] == clre[2, ii] && rpx[k] == clre[3, ii])) {
-              wrt(paste0("NAME G27[", k, "] '", shortname("lev_", displevel, "_resi_variance_", rpx[k]), "'"))
+              wrt(paste0("NAME G27[", k, "] '", shortname("lev_", displevel, "_resi_var_", rpx[k]), "'"))
               wrt(paste0("DESC G27[", k, "] ", "'residual variance'"))
             } else {
               if (ii < ncol(clre))
                 ii <- ii + 1
             }
           } else {
-            wrt(paste0("NAME G27[", k, "] '", shortname("lev_", displevel, "_resi_variance_", rpx[k]), "'"))
+            wrt(paste0("NAME G27[", k, "] '", shortname("lev_", displevel, "_resi_var_", rpx[k]), "'"))
             wrt(paste0("DESC G27[", k, "] ", "'residual variance'"))
           }
         }

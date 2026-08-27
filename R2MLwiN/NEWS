@@ -1,6 +1,7 @@
 Thu Aug 27 2026
 1. Changes
     * Add support for the fixef() ranef() and VarCorr() functions
+    * Rename variance column for MCMC residuals to lev_<level number>_resi_var_<random variable> to improve consistency
 
 Tue Aug 18 2026
 1. Changes
