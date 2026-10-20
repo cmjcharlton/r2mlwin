@@ -23,7 +23,8 @@ Imports:
     lattice,
     memisc,
     broom,
-    tibble
+    tibble,
+    nlme
 Suggests:
     doBy,
     car,
