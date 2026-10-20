@@ -706,15 +706,10 @@ VarCorr.mlwinfitIGLS <- function(object, sigma = 1, ...) {
   }
 
   if (!missing(sigma)) {
-    sds <- (sds / sigmaest) * sigma
     sigmaest <- sigma
   }
 
   if (object@D == "Normal" && simplelev1 == TRUE) {
-    #vc <- rbind(vc, rep("", ncol(vc)))
-    #rownames(vc)[[nrow(vc)]] <- "Residual"
-    #vc[nrow(vc), 1] <- sigmaest^2
-    #vc[nrow(vc), 2] <- sigmaest
     attr(vc, "sc") <- sigmaest^2
     attr(vc, "useSc") <- TRUE
   }
