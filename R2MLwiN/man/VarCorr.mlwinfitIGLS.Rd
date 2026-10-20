@@ -4,10 +4,10 @@
 \alias{VarCorr.mlwinfitIGLS}
 \title{Calculates the estimated variances, standard deviations, and correlations between the random-effects term from "mlwinfitIGLS" objects}
 \usage{
-\method{VarCorr}{mlwinfitIGLS}(object, sigma = 1, ...)
+\method{VarCorr}{mlwinfitIGLS}(x, sigma = 1, ...)
 }
 \arguments{
-\item{object}{An \code{\link{mlwinfitIGLS-class}} object}
+\item{x}{An \code{\link{mlwinfitIGLS-class}} object}
 
 \item{sigma}{an optional numeric value used as a multiplier for the standard deviations.}
 

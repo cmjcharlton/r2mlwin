@@ -832,29 +832,29 @@ ranef.mlwinfitMCMC <- function(object, condVar = TRUE, ...) {
 }
 
 #' Calculates the estimated variances, standard deviations, and correlations between the random-effects term from "mlwinfitMCMC" objects
-#' @param object An \code{\link{mlwinfitMCMC-class}} object
+#' @param x An \code{\link{mlwinfitMCMC-class}} object
 #' @param sigma an optional numeric value used as a multiplier for the standard deviations.
 #' @param ... Other arguments
 #' @method VarCorr mlwinfitMCMC
 #' @export
-VarCorr.mlwinfitMCMC <- function(object, sigma = 1, ...) {
+VarCorr.mlwinfitMCMC <- function(x, sigma = 1, ...) {
   vc <- list()
-  rpnames <- names(object@RP)
+  rpnames <- names(x@RP)
   sds <- NULL
   corrs <- matrix(0, 0, 0)
   simplelev1 <- FALSE
 
-  if (object@D == "Normal") {
+  if (x@D == "Normal") {
     simplelev1 <- ((length(grep("RP1", rpnames)) == 1) && ("RP1_var_Intercept" %in% rpnames)) # No complex level-1
   }
 
   # Note: This will not pick up parameters where there is a covariance with no
   # corresponding variances, but these would have a correlation of zero in any case
   sigmaest <- 1
-  for (lev in seq_along(object@levID)) {
-    levnum = (length(object@levID) - lev) + 1
+  for (lev in seq_along(x@levID)) {
+    levnum = (length(x@levID) - lev) + 1
     if (levnum == 1 && simplelev1 == TRUE) {
-      sigmaest <- sqrt(object@RP["RP1_var_Intercept"])
+      sigmaest <- sqrt(x@RP["RP1_var_Intercept"])
     } else {
       expr <- paste0("^RP", levnum, "_var_")
       varnames <- gsub(expr, "", rpnames)[grep(expr, rpnames)]
@@ -864,14 +864,14 @@ VarCorr.mlwinfitMCMC <- function(object, sigma = 1, ...) {
       for (row in seq_along(varnames)) {
         for (col in seq_len(row-1)) {
           covparamname <- paste0("RP", levnum, "_cov_", varnames[col], "_", varnames[row])
-          if (covparamname %in% names(object@RP)) {
-            omega_u[row, col] = object@RP[covparamname]
+          if (covparamname %in% names(x@RP)) {
+            omega_u[row, col] = x@RP[covparamname]
             omega_u[col, row] = omega_u[row, col] 
           }
         }
         varparamname <- paste0("RP", levnum, "_var_", varnames[row])
-        if (varparamname %in% names(object@RP)) {
-          omega_u[row, row] = object@RP[varparamname]
+        if (varparamname %in% names(x@RP)) {
+          omega_u[row, row] = x@RP[varparamname]
         }
       }
       stddev <- sqrt(diag(omega_u))
@@ -881,20 +881,15 @@ VarCorr.mlwinfitMCMC <- function(object, sigma = 1, ...) {
       attr(omega_u, "correlation") <- cor
 
       class(omega_u) <- c("vcmat_us", "matrix", "array")
-      vc[[object@levID[lev]]] <- omega_u
+      vc[[x@levID[lev]]] <- omega_u
     }
   }
 
   if (!missing(sigma)) {
-    sds <- (sds / sigmaest) * sigma
     sigmaest <- sigma
   }
 
-  if (object@D == "Normal" && simplelev1 == TRUE) {
-    #vc <- rbind(vc, rep("", ncol(vc)))
-    #rownames(vc)[[nrow(vc)]] <- "Residual"
-    #vc[nrow(vc), 1] <- sigmaest^2
-    #vc[nrow(vc), 2] <- sigmaest
+  if (x@D == "Normal" && simplelev1 == TRUE) {
     attr(vc, "sc") <- sigmaest^2
     attr(vc, "useSc") <- TRUE
   }
