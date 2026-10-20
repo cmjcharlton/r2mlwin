@@ -149,7 +149,7 @@ demo(MCMCGuide03)
 Useful links:
 \itemize{
   \item \url{https://www.bristol.ac.uk/cmm/software/r2mlwin/}
-  \item \url{https://r-forge.r-project.org/projects/r2mlwin/}
+  \item \url{https://github.com/cmjcharlton/r2mlwin/}
   \item \url{https://www.bristol.ac.uk/cmm/software/mlwin/}
 }
 
