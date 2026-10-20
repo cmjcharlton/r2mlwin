@@ -1428,6 +1428,23 @@ version:date:md5:filename:x64:trial:platform:architecture
 3.18:Jul 2026:6524ba97c6c4462048ac7937a380ffb1:mlnscript:TRUE:FALSE:bsd:x64
 3.18:Jul 2026:adf9943bca0bd0e9ec8ad1e4ba937810:mlnscript:TRUE:FALSE:bsd:x64
 3.18:Jul 2026:a314d00497592017044e2c833d313450:mlnscript:TRUE:FALSE:bsd:x64
+3.19:Oct 2026:c37ec11a9671a3118c23a974873f76aa:mlwin.exe:TRUE:FALSE:win:x64
+3.19:Oct 2026:bdf8ed549db2d8d8a21d9e612cc1c96d:mlnscript.exe:TRUE:FALSE:win:x64
+3.19:Oct 2026:3f5864312ba043000d52e71ebc4c9509:mlnscript:TRUE:FALSE:lin:x64
+3.19:Oct 2026:49f543e78f955b45a6bb5fbb26595b0a:mlnscript:TRUE:FALSE:lin:x64
+3.19:Oct 2026:ea7057223f138a178beb29929e662aa3:mlnscript:TRUE:FALSE:lin:x64
+3.19:Oct 2026:792160e8c87bd585cc9b4363cc71c2a7:mlnscript:TRUE:FALSE:lin:x64
+3.19:Oct 2026:b9ad6a7b1c98a2afa1d2df0e9a430771:mlnscript:TRUE:FALSE:lin:x64
+3.19:Oct 2026:ef82793ce936c3d09917d65e77b002dd:mlnscript:TRUE:FALSE:lin:x64
+3.19:Oct 2026:ecd35a68bca2197f14ad4379879a1a55:mlnscript:TRUE:FALSE:lin:x64
+3.19:Oct 2026:e4cd78237f89255d3530798b912cbc8c:mlnscript:TRUE:FALSE:lin:x64
+3.19:Oct 2026:e1cb412899c3313f0fc6b9a87fb69af7:mlnscript:TRUE:FALSE:lin:arm64
+3.19:Oct 2026:7ff383d7c291ec3dcef70dda0eb99584:mlnscript:TRUE:FALSE:lin:arm64
+3.19:Oct 2026:52153f11e8f3ce1737a911ef2c194540:mlnscript:TRUE:FALSE:lin:riscv64
+3.19:Oct 2026:a05e6e5d78dad4f4e89b1b6f22258316:mlnscript:TRUE:FALSE:mac:x64&arm64
+3.19:Oct 2026:db1a42b1510fbb9d125441a7a1391f1d:mlnscript:TRUE:FALSE:bsd:x64
+3.19:Oct 2026:8eb8a4ccce14f0f5c930b68ff7d524b3:mlnscript:TRUE:FALSE:bsd:x64
+3.19:Oct 2026:937fc7defc945abc888ff7f0c6134449:mlnscript:TRUE:FALSE:bsd:x64
 '
   versioninfo <- utils::read.delim(textConnection(versioninfostr), header = TRUE, sep = ":", strip.white = TRUE)
   if (isTRUE(checkversion)) {
